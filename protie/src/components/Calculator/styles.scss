@@ -1,0 +1,85 @@
+*::-webkit-input-placeholder {
+  color: white;
+}
+
+.saladLogo {
+  height: 6em;
+  padding: 1.5em;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+
+  &_food {
+    padding: 0.5rem;
+    margin: 2rem;
+    width: 40%;
+    border-bottom: 2px  solid black;
+    border-width: 50%;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    color: white;
+    background: transparent;
+    font-size: medium;
+    text-align: center;
+
+    ::placeholder {
+      border-color: #fc6e51;
+      opacity: 1;
+    }
+
+    &:focus {
+      outline: #165d56;
+      border-color: #fc6e51;
+    }
+  }
+
+  &_quantity_number {
+    padding: 0.5rem;
+    margin: 2rem;
+    margin-right: 1rem;
+    width: 33%;
+    border-bottom: 2px  solid black;
+    border-width: 50%;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    color: white;
+    background: transparent;
+    text-align:center;
+
+    ::placeholder {
+      border-color: #fc6e51;
+      opacity: 1;
+    }
+
+    &:focus {
+      outline: #165d56;
+      border-color: #fc6e51;
+    }
+  }
+
+    span {
+      text-align: center;
+      padding: 0.5rem;
+  }
+
+  .calculatorButton {
+    padding: 0.5rem;
+    border-radius: 10px;
+    border-color: #fc6e51;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-size: medium;
+    margin:1rem;
+  }
+
+  .calculatorButton:hover{
+    background-color: #fc6e51;
+    color:white;
+    border-color: white;
+  }
+}
