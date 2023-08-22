@@ -1,11 +1,11 @@
 // Action type
-export const SELECT_VEGGIE = 'SELECT_VEGGIE';
+export const TYPE_VEGGIE = 'TYPE_VEGGIE';
 export const TYPE_AMOUNT = 'TYPE_AMOUNT';
 
 
 // Action creator
-export const selectVeggie = (value) => ({
-  type: SELECT_VEGGIE,
+export const typeVeggie = (value) => ({
+  type: TYPE_VEGGIE,
   input: value,
 });
 

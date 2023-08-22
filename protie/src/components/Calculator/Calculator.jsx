@@ -1,11 +1,11 @@
 import './styles.scss'
 import salad from '../../assets/healthy-food-salad-svgrepo-com.svg'
 import veggies from '../../data';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { selectVeggie, typeAmount } from '../../actions/calculator';
+import { useDispatch, useSelector } from 'react-redux';
+import { typeVeggie, typeAmount } from '../../actions/calculator';
 
 export default function Calculator() {
-  // const { veggieSelected, amountInput } = useSelector((state) => state)
+  const { veggieInput, amountInput } = useSelector((state) => state)
   // const dispatch = useDispatch();
 
   return (
@@ -19,6 +19,7 @@ export default function Calculator() {
         id='veggie' name='veggie'
         size='144'
         autoComplete='off'
+        value={veggieInput}
       />
       {/* Select option */}
       {/* <select className='input-group_food'>
@@ -29,13 +30,16 @@ export default function Calculator() {
       <input 
         className='input-group_quantity_number' 
         placeholder='La quantité'
-        // value={amountInput}
+        value={amountInput}
         // onChange={(e) => dispatch(typeAmount(e.target.value))}
         />
         <span>/grs</span>
     </div>
     <div>
       <button className='calculatorButton' type="button">Je calcule !</button>
+    </div>
+    <div>
+      <p> Vous avez consommé {}</p>
     </div>
     <div>
         <img src={salad} className="saladLogo" alt="salad" />
