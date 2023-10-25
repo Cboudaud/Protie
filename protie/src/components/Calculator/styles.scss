@@ -43,12 +43,13 @@
     border-right: 0;
     color: white;
     background: transparent;
-    font-size: medium;
+    font-size:medium;
     text-align: center;
 
     ::placeholder {
       border-color: #fc6e51;
       opacity: 1;
+      font-size: small;
     }
 
     &:focus {
