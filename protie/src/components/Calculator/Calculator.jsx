@@ -89,9 +89,12 @@ export default function Calculator() {
     }
   };
 
+  const sortedVeggies = veggies.slice().sort((a, b) => a.name.localeCompare(b.name));
+
+
   return (
     <div className="input-group">
-        <datalist id="veggies">{veggies.map((veggie) => <option key={veggie.id}>{veggie.name} </option>)}</datalist>
+        <datalist id="veggies">{sortedVeggies.map((veggie) => <option key={veggie.id}>{veggie.name} </option>)}</datalist>
         <label htmlFor="veggies">Choisissez l'aliment consommé : </label>
         <input
           className='input-group_food'
