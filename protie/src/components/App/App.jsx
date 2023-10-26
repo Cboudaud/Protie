@@ -1,5 +1,5 @@
-import arm from '../../assets/muscles-arm-svgrepo-com.svg'
-import './styles.scss'
+import arm from '../../assets/muscles-arm-svgrepo-com.svg';
+import './styles.scss';
 
 export default function App() {
 

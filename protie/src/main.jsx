@@ -1,10 +1,11 @@
 /* eslint-disable no-undef */
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { Provider } from 'react-redux'
-import App from './components/App/App'
-import Calculator from './components/Calculator/Calculator'
-import './index.css'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import App from './components/App/App';
+import Calculator from './components/Calculator/Calculator';
+import Footer from './components/Footer/Footer';
+import './index.css';
 import store from '../src/store/index';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -12,6 +13,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <App />
     <Calculator />
+    <Footer />
   </React.StrictMode>
   </Provider>
 )
