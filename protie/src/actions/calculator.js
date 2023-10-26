@@ -4,6 +4,7 @@ export const TYPE_AMOUNT = 'TYPE_AMOUNT';
 export const HANDLE_CALCULATOR = 'HANDLE_CALCULATOR'
 export const SET_PROTEIN_RESULT = 'SET_PROTEIN_RESULT'
 export const SET_RESULT_TEXT = 'SET_RESULT_TEXT'
+export const ADD_PROTEIN_RESULT = 'ADD_PROTEIN_RESULT';
 
 
 // Action creator
@@ -29,4 +30,9 @@ export const setProteinResult = (result) => ({
 export const setResultText = (text) => ({
   type: SET_RESULT_TEXT,
   input: text,
+});
+
+export const addProteinResult = (result) => ({
+  type: ADD_PROTEIN_RESULT,
+  input: result,
 });
