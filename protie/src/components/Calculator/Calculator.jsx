@@ -6,29 +6,31 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { typeVeggie, typeAmount, setProteinResult, setResultText } from '../../actions/calculator';
 
-const API_BASE_URL = 'http://localhost:3001';
+// const API_BASE_URL = 'http://localhost:3001';
 
 export default function Calculator() {
   const { veggieInput, amountInput, resultText } = useSelector((state) => state);
   const [isCalculated, setIsCalculated] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [veggies, setVeggies] = useState([]);
-  const [apiError, setApiError] = useState(false);
+  // const [veggies, setVeggies] = useState([]);
+  // const [apiError, setApiError] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    // Get all veggies from API
-    fetch(`${API_BASE_URL}/veggies`)
-      .then((response) => response.json())
-      .then((data) => {
-        setVeggies(data);
-        setApiError(false);
-      })
-      .catch((error) => {
-        console.error('Erreur lors du chargement des veggies', error);
-        setApiError(true);
-      });
-  }, []);
+  // Decomment to use with API
+
+  // useEffect(() => {
+  //   // Get all veggies from API
+  //   fetch(`${API_BASE_URL}/veggies`)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setVeggies(data);
+  //       setApiError(false);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Erreur lors du chargement des veggies', error);
+  //       setApiError(true);
+  //     });
+  // }, []);
 
   const calculateProtein = () => {
     // Management of errors if input are empty before clic on calculate button
@@ -45,16 +47,26 @@ export default function Calculator() {
       return;
     }
 
+    // // Check if veggies list is available
+    // if (veggies.length === 0 && !apiError) {
+    //   // You might want to display an error message or handle this case differently
+    //   console.error('List of veggies is empty. Please wait for the data to load.');
+    //   return;
+    // }
+
     // 1. Validate veggie input using regex
-    const isValidVeggieInput = /^[a-zA-Z\s]{0,25}$/.test(veggieInput);
+    const isValidVeggieInput = /^[a-zA-Z\u00C0-\u017F\s]{0,30}$/i.test(veggieInput);
 
     if (!isValidVeggieInput) {
       setErrorMessage("Veuillez choisir un aliment de la liste.");
       return;
     }
 
-    // 2. Find the right object (veggie) which is selected
-    const selectedVeggie = veggies.find((veggie) => veggie.name === veggieInput);
+    // 2. Find the right object (veggie) which is selected + modify this line to use the API, remplace veggiesData by veggies
+    const selectedVeggie = veggiesData.find((veggie) => veggie.name === veggieInput);
+
+    console.log('selectedVeggie:', selectedVeggie);
+
 
     if (!selectedVeggie) {
       setErrorMessage("Veuillez choisir un aliment de la liste.");
@@ -121,8 +133,9 @@ export default function Calculator() {
     }
   };
 
-  const veggiesToDisplay = apiError ? veggiesData : veggies;
-  const sortedVeggies = veggiesToDisplay.slice().sort((a, b) => a.name.localeCompare(b.name));
+  // Decomment the line under and remplace veggiesData by veggiesToDisplay
+  // const veggiesToDisplay = apiError ? veggiesData : veggies;
+  const sortedVeggies = veggiesData.slice().sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <div className="input-group">
