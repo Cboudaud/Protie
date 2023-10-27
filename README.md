@@ -1,3 +1,3 @@
-# Protie (en cours...)
+# Protie
 
-Un site simple pour calculer son apport de protéines végétales
+Un site simple pour calculer son apport en protéines végétales !
