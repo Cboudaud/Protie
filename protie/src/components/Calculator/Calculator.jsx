@@ -1,21 +1,39 @@
 /* eslint-disable react/no-unescaped-entities */
 import './styles.scss';
 import salad from '../../assets/healthy-food-salad-svgrepo-com.svg';
-import veggies from '../../data';
+import veggiesData from '../../data';
 // import ProteinList from '../ProteinList/ProteinList';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { typeVeggie, typeAmount, setProteinResult, setResultText } from '../../actions/calculator';
+
+const API_BASE_URL = 'http://localhost:3001';
 
 export default function Calculator() {
   const { veggieInput, amountInput, resultText } = useSelector((state) => state);
   const [isCalculated, setIsCalculated] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [veggies, setVeggies] = useState([]);
+  const [apiError, setApiError] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    // Get all veggies from API
+    fetch(`${API_BASE_URL}/veggies`)
+      .then((response) => response.json())
+      .then((data) => {
+        setVeggies(data);
+        setApiError(false); 
+      })
+      .catch((error) => {
+        console.error('Erreur lors du chargement des veggies', error);
+        setApiError(true); 
+      });
+  }, []);
 
   const calculateProtein = () => {
 
-    // Gestion erreurs
+    // Management of errors if input are empty before clic on calculate button
     if (!veggieInput && !amountInput) {
       setErrorMessage('Veuillez choisir un aliment et la quantité consommée.');
       return;
@@ -30,21 +48,21 @@ export default function Calculator() {
     }
     setErrorMessage('');
 
-    // 1. Trouver l'objet correspondant au légume sélectionné
+    // 1. Find the right object (veggie) which is selected
     const selectedVeggie = veggies.find(veggie => veggie.name === veggieInput);
 
     if (selectedVeggie) {
-      // 2. Extraire le nombre de grammes de protéines
+      // 2. Get the number of protein
       const proteinPer100g = selectedVeggie.protein;
 
-      // 3. Multiplier par la quantité entrée
+      // 3. Multiply by the amount
       const totalProtein = (proteinPer100g * amountInput) / 100;
 
-      // 4. Mise à jour de l'affichage dans la balise <p> et le state Redux
+      // 4. Display the result
       dispatch(setResultText(`Vous avez consommé ${totalProtein.toFixed(2)} grammes de protéines !`));
       dispatch(setProteinResult(totalProtein));
 
-      // 5. Ajouter le résultat à la liste des protéines consommées
+      // 5. Add result to the list of veggies eaten (in stand by)
       // dispatch(addProteinResult(totalProtein));
       // console.log("Total Protein:", totalProtein);
     }
@@ -54,7 +72,7 @@ export default function Calculator() {
   const handleAmountChange = (e) => {
     const inputValue = e.target.value;
 
-    // Regex
+    // Regex to control the amount input
     const isValidInput = /^\d+(\.\d{0,2})?$/.test(inputValue);
 
     if (isValidInput) {
@@ -89,8 +107,8 @@ export default function Calculator() {
     }
   };
 
-  const sortedVeggies = veggies.slice().sort((a, b) => a.name.localeCompare(b.name));
-
+  const veggiesToDisplay = apiError ? veggiesData : veggies;
+  const sortedVeggies = veggiesToDisplay.slice().sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <div className="input-group">
@@ -107,7 +125,6 @@ export default function Calculator() {
           value={veggieInput}
           onChange={(e)=> dispatch(typeVeggie(e.target.value))}
         />
-
       <div className='input-group_quantity'>
         <input 
           className='input-group_quantity_number' 
