@@ -3,7 +3,7 @@ import './styles.scss';
 import salad from '../../assets/healthy-food-salad-svgrepo-com.svg';
 import veggiesData from '../../data';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useState } from 'react'; // import useEffect to make the API code work
 import { typeVeggie, typeAmount, setProteinResult, setResultText } from '../../actions/calculator';
 
 // const API_BASE_URL = 'http://localhost:3001';

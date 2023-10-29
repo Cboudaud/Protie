@@ -1,17 +1,83 @@
+// Mixin for input styles
+@mixin input-styles {
+  padding: 0.5rem;
+  margin: 2rem;
+  width: 180px;
+  border-bottom: 2px solid black;
+  border-width: 50%;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  color: white;
+  background: transparent;
+  font-size: medium;
+  text-align: center;
+
+  &::placeholder {
+    border-color: #fc6e51;
+    opacity: 1;
+  }
+
+  &:focus {
+    outline: #165d56;
+    border-color: #fc6e51;
+  }
+}
+
+// Mixin for button styles
+@mixin button-styles {
+  padding: 0.5rem;
+  border-radius: 10px;
+  border-color: #fc6e51;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-size: medium;
+  margin: 1rem;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &_food {
+    @include input-styles;
+  }
+
+  &_quantity_number {
+    @include input-styles;
+    margin-right: 1rem;
+    width: 100px;
+  }
+
+  span {
+    text-align: center;
+    padding: 0.5rem;
+  }
+
+  .calculatorButton {
+    @include button-styles;
+  }
+
+  .calculatorButton:hover {
+    animation: shake 0.5s;
+    animation-iteration-count: infinite;
+  }
+}
+
 *::-webkit-input-placeholder {
   color: white;
 }
-
 #proteinResult {
   color:#fc6e51;
   font-weight: bold;
 }
 
+// Logo salad + animations 
+
 .saladLogo {
   height: 6em;
   padding: 1.5em;
 }
-
 
 .animatedSalad {
   animation: moveImage 0.5s ease-in-out;
@@ -42,83 +108,4 @@
    100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
 
-.input-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-
-  &_food {
-    padding: 0.5rem;
-    margin: 2rem;
-    width: 180px;
-    border-bottom: 2px  solid black;
-    border-width: 50%;
-    border-top: 0;
-    border-left: 0;
-    border-right: 0;
-    color: white;
-    background: transparent;
-    font-size:medium;
-    text-align: center;
-
-    ::placeholder {
-      border-color: #fc6e51;
-      opacity: 1;
-    }
-
-    &:focus {
-      outline: #165d56;
-      border-color: #fc6e51;
-    }
-  }
-
-  &_quantity_number {
-    padding: 0.5rem;
-    margin: 2rem;
-    margin-right: 1rem;
-    width: 100px;
-    border-bottom: 2px  solid black;
-    border-width: 50%;
-    border-top: 0;
-    border-left: 0;
-    border-right: 0;
-    color: white;
-    background: transparent;
-    text-align:center;
-    font-size:medium;
-
-
-    ::placeholder {
-      border-color: #fc6e51;
-      opacity: 1;
-    }
-
-    &:focus {
-      outline: #165d56;
-      border-color: #fc6e51;
-    }
-  }
-
-    span {
-      text-align: center;
-      padding: 0.5rem;
-  }
-
-  .calculatorButton {
-    padding: 0.5rem;
-    border-radius: 10px;
-    border-color: #fc6e51;
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    font-size: medium;
-    margin:1rem;
-  }
-
-  .calculatorButton:hover{
-    background-color: #fc6e51;
-    color:white;
-    border-color: white;
-    cursor: pointer;
-  }
-}
 
