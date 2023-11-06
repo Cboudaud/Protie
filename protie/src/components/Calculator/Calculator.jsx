@@ -3,7 +3,7 @@ import './styles.scss';
 import salad from '../../assets/healthy-food-salad-svgrepo-com.svg';
 import veggiesData from '../../data';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useState } from 'react'; // Add useEffect to use the API
 import { typeVeggie, typeAmount, setProteinResult, setResultText } from '../../actions/calculator';
 
 // const API_BASE_URL = 'http://localhost:3001';
@@ -54,15 +54,7 @@ export default function Calculator() {
     //   return;
     // }
 
-    // 1. Validate veggie input using regex
-    const isValidVeggieInput = /^[a-zA-Z\u00C0-\u017F\s]{0,30}$/i.test(veggieInput);
-
-    if (!isValidVeggieInput) {
-      setErrorMessage("Veuillez choisir un aliment de la liste.");
-      return;
-    }
-
-    // 2. Find the right object (veggie) which is selected + modify this line to use the API, remplace veggiesData by veggies
+    // 1. Find the right object (veggie) which is selected + modify this line to use the API, remplace veggiesData by veggies
     const selectedVeggie = veggiesData.find((veggie) => veggie.name === veggieInput);
 
     console.log('selectedVeggie:', selectedVeggie);
@@ -75,13 +67,13 @@ export default function Calculator() {
 
     setErrorMessage('');
 
-    // 3. Get the number of protein
+    // 2. Get the number of protein
     const proteinPer100g = selectedVeggie.protein;
 
-    // 4. Multiply by the amount
+    // 3. Multiply by the amount
     const totalProtein = (proteinPer100g * amountInput) / 100;
 
-    // 5. Display the result
+    // 4. Display the result
     dispatch(setResultText(`Vous avez consommé ${totalProtein.toFixed(2)} grammes de protéines !`));
     dispatch(setProteinResult(totalProtein));
 
@@ -139,39 +131,34 @@ export default function Calculator() {
 
   return (
     <div className="input-group">
-      <datalist id="veggies">
-        {sortedVeggies.map((veggie) => (
-          <option key={veggie.id}>{veggie.name} </option>
-        ))}
-      </datalist>
-      <label htmlFor="veggies">Choisissez l'aliment consommé : </label>
+    <label htmlFor="veggie">Choisissez l'aliment consommé : </label>
+    <select
+      className="input-group_food"
+      id="veggie"
+      name="veggie"
+      value={veggieInput}
+      onChange={(e) => dispatch(typeVeggie(e.target.value))}
+    >
+      <option value="" disabled>L'aliment</option>
+      {sortedVeggies.map((veggie) => (
+        <option key={veggie.id} value={veggie.name}>{veggie.name}</option>
+      ))}
+    </select>
+    <div className="input-group_quantity">
       <input
-        className="input-group_food"
-        type="text"
-        placeholder="L'aliment"
-        list="veggies"
-        id="veggie"
-        name="veggie"
-        size="100"
-        autoComplete="off"
-        value={veggieInput}
-        onChange={(e) => dispatch(typeVeggie(e.target.value))}
+        className="input-group_quantity_number"
+        placeholder="La quantité"
+        value={amountInput}
+        onChange={handleAmountChange}
       />
-      <div className="input-group_quantity">
-        <input
-          className="input-group_quantity_number"
-          placeholder="La quantité"
-          value={amountInput}
-          onChange={handleAmountChange}
-        />
-        <span>/grs</span>
-      </div>
-      <div>{renderButton()}</div>
-      <div>{errorMessage && <p id="proteinResult">{errorMessage}</p>}</div>
-      <div>{resultText && <p id="proteinResult">{resultText}</p>}</div>
-      <div className={isCalculated ? 'animatedSalad' : ''}>
-        <img src={salad} className="saladLogo" alt="salad" />
-      </div>
+      <span>/grs</span>
+    </div>
+    <div>{renderButton()}</div>
+    <div>{errorMessage && <p id="proteinResult">{errorMessage}</p>}</div>
+    <div>{resultText && <p id="proteinResult">{resultText}</p>}</div>
+    <div className={isCalculated ? 'animatedSalad' : ''}>
+      <img src={salad} className="saladLogo" alt="salad" />
+    </div>
       {/* <ProteinList proteinList={proteinList} /> */}
     </div>
   );
